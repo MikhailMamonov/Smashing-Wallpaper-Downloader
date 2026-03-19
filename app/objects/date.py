@@ -1,9 +1,10 @@
 from datetime import datetime
+import calendar 
 
 class Date: 
     def __init__(self, date:str):
-        self.month = self.__validate_month_input(date[:2])
-        self.year = self.__validate_year_input(date[2:])
+        self._month = self.__validate_month_input(date[:2])
+        self._year = self.__validate_year_input(date[2:])
     
     @staticmethod
     def __validate_month_input(month: str)-> str:
@@ -12,7 +13,19 @@ class Date:
         raise ValueError('Month value is not valid', month)
     
     @staticmethod
-    def __validate_year_input(year: str)-> str:
+    def __validate_year_input(year: str)-> int:
         if year.isdigit() and 2000 <= int(year)<=datetime.now().year:
-            return year
+            return int(year)
         raise ValueError('Year value is not valid', year)
+    
+    @property
+    def month_name(self)-> str: 
+        return calendar.month_name[int(self._month)]
+    
+    @property
+    def month_number(self)-> int: 
+        return int(self._month)
+    
+    @property
+    def year(self) -> int:
+        return self._year 
