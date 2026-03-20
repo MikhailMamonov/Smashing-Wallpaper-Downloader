@@ -9,6 +9,7 @@ import click
 @click.option('-r', '--resolution', help='Разрешение экрана', required=True)
 @click.option('-m','--my', required=True, help='Месяц и год')       
 def run_cli(resolution, my):
+    '''Program for downloading files from 'www.smashingmagazine.com"'''
     try:
         date = Date(my)
         downloader = ImageDownloader(resolution)
