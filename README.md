@@ -18,6 +18,7 @@ python -m venv .venv
 ### 3. Установить зависимости
 ```powershell
 pip install -r requirements.txt
+```
 
 ```
 $ python main.py --help
