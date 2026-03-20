@@ -1,16 +1,17 @@
-from app.parser import parse_args
 from constants.api import *
 from app.objects.date import Date
 from app.objects.image_downloader import ImageDownloader
 import asyncio
+import click
 
 
-
-def run_cli():
-    args = parse_args()
+@click.command()
+@click.option('-r', '--resolution', help='Разрешение экрана', required=True)
+@click.option('-m','--my', required=True, help='Месяц и год')       
+def run_cli(resolution, my):
     try:
-        date = Date(args.my)
-        downloader = ImageDownloader(args.resolution)
+        date = Date(my)
+        downloader = ImageDownloader(resolution)
     except ValueError as err: 
         message, value = err.args
         print('{0}: {1}'.format(message, value))
@@ -19,6 +20,7 @@ def run_cli():
     #Getting url link in expected format
     url = downloader.get_url(URL, date.year, date.month_number, date.month_name)
 
+    print('Trying to establish connection...')
     #Making GET request, creating storage directory for images,
     try:
         storage_path = downloader.create_directory(BASE_URL, date.month_name, date.year)
